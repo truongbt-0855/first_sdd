@@ -20,7 +20,7 @@ Xây dựng hệ thống todo list cơ bản cho phép người dùng quản lý
 
 **Language/Version**: PHP 8.3+ (Laravel 11), JavaScript ES2022+ (Vue 3)  
 **Primary Dependencies**: Laravel 11, Vue 3 Composition API, Vite 5+, Tailwind CSS 3+, PostgreSQL 15+, Axios  
-**Storage**: PostgreSQL 15+ (todo persistence, indexes on user_id và completed status)  
+**Storage**: PostgreSQL 15+ (todo persistence, index on completed status for future filtering)  
 **Testing**: PHPUnit (backend unit/feature tests), Laravel HTTP Tests (API contract testing)  
 **Target Platform**: Web browser (Chrome/Firefox/Safari modern versions), responsive mobile-first
 **Project Type**: Web application (Laravel backend + Vue 3 SPA frontend)  

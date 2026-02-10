@@ -249,17 +249,19 @@
 
 - [ ] T075 Run full test suite: `php artisan test`
 - [ ] T076 Manual testing: Test all user stories end-to-end
-- [ ] T077 Test edge cases: Special characters in title, concurrent toggles, rapid creates
-- [ ] T078 Verify all acceptance scenarios from spec.md
-- [ ] T079 Test responsive design on mobile/tablet/desktop
+- [ ] T077 Test edge cases: Concurrent toggles, rapid creates, duplicate titles
+- [ ] T078 Test special characters: Create todos with emoji (🎯📝), Vietnamese diacritics (ĂĂĂĂĂ), special symbols (@#$)
+- [ ] T079 Verify all acceptance scenarios from spec.md
+- [ ] T080 Test responsive design on mobile/tablet/desktop
+- [ ] T081 Manual UX test: Verify SC-001 (can create todo within 10 seconds of accessing app)
 
 ### Deployment Prep
 
-- [ ] T080 [P] Review .env.example for production settings
-- [ ] T081 [P] Generate API documentation from OpenAPI spec
-- [ ] T082 Verify all console.log removed from production code
-- [ ] T083 Run production build: `npm run build`
-- [ ] T084 Final code review checklist completion
+- [ ] T082 [P] Review .env.example for production settings
+- [ ] T083 [P] Generate API documentation from OpenAPI spec
+- [ ] T084 Verify all console.log removed from production code
+- [ ] T085 Run production build: `npm run build`
+- [ ] T086 Final code review checklist completion
 
 **Completion Criteria**:
 ✅ All code formatted (PSR-12, no eslint errors)  
@@ -317,7 +319,7 @@ Tất cả tasks T062-T074 đều [P] → có thể chạy đồng thời
 
 ## Task Summary
 
-**Total Tasks**: 84
+**Total Tasks**: 86
 
 ### By Phase:
 - Phase 1 (Setup): 7 tasks
@@ -326,18 +328,18 @@ Tất cả tasks T062-T074 đều [P] → có thể chạy đồng thời
 - Phase 4 (US2 - P2): 10 tasks
 - Phase 5 (US3 - P3): 11 tasks
 - Phase 6 (US4 - P4): 12 tasks
-- Phase 7 (Polish): 23 tasks
+- Phase 7 (Polish): 25 tasks
 
 ### By Type:
 - Backend: 24 tasks
 - Frontend: 28 tasks
-- Testing: 15 tasks
+- Testing: 17 tasks
 - Infrastructure: 7 tasks
 - Quality/Polish: 10 tasks
 
 ### Parallelizable:
-- [P] tasks: 38 tasks (45% can run in parallel)
-- Sequential tasks: 46 tasks
+- [P] tasks: 38 tasks (44% can run in parallel)
+- Sequential tasks: 48 tasks
 
 ---
 
@@ -460,7 +462,7 @@ Before merging to main:
 ### ✅ Testing Requirements
 - Tasks T026-T028, T036-T038, T047-T049, T059-T061: Feature tests
 - Task T075: Full test suite
-- Task T078: Verify all acceptance scenarios
+- Task T079: Verify all acceptance scenarios
 
 **All constitutional requirements addressed in task breakdown** ✅
 

@@ -169,6 +169,7 @@ INDEX idx_todos_completed (completed)  -- For future filtering by status
 2. `title` không bao giờ empty sau khi validate
 3. `created_at` không bao giờ thay đổi sau khi create
 4. `updated_at` tự động update mỗi khi modify
+5. **Ordering**: Todos được sắp xếp theo `created_at DESC` (mới nhất trên cùng) khi hiển thị
 
 ---
 

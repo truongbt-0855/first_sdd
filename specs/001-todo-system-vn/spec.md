@@ -75,11 +75,11 @@ Người dùng cần xóa todo không còn cần thiết để giữ danh sách 
 
 ### Trường hợp Biên
 
-- Điều gì xảy ra khi người dùng cố tạo nhiều todo với tiêu đề giống hệt nhau?
-- Hệ thống xử lý lỗi mạng trong các thao tác todo như thế nào?
-- Điều gì xảy ra khi nhiều người dùng chỉnh sửa cùng một todo đồng thời (nếu đa người dùng)?
-- Hệ thống xử lý ký tự đặc biệt (emoji, dấu, biểu tượng) trong tiêu đề todo như thế nào?
-- Điều gì xảy ra khi người dùng điều hướng đi trong khi tạo hoặc chỉnh sửa todo?
+- **Duplicate titles**: Cho phép - Người dùng có thể tạo nhiều todo với tiêu đề giống hệt nhau (không có unique constraint)
+- **Network errors**: Hệ thống hiển thị error messages rõ ràng và cho phép retry (Phase 7: tasks T066-T068)
+- **Concurrent edits** (multi-user): **Out of scope cho single-user MVP** - Behavior: Last write wins, không có optimistic locking
+- **Special characters**: Hỗ trợ đầy đủ UTF-8 - emoji (🎯, 📝), dấu tiếng Việt (ĂĂĂĂĂ), ký tự đặc biệt (@, #, $) đều được chấp nhận
+- **Navigation during edit**: Unsaved changes bị mất - Không có auto-save hay warning trong MVP
 
 ## Yêu cầu *(bắt buộc)*
 
