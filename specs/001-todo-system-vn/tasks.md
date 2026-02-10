@@ -27,13 +27,13 @@
 
 **Tasks**:
 
-- [ ] T001 Verify Laravel 11 installation và PHP 8.3+ environment
-- [ ] T002 Configure PostgreSQL database connection in `.env`
-- [ ] T003 Set up Vite + Vue 3 + Tailwind CSS in `vite.config.js` và `tailwind.config.js`
-- [ ] T004 Install frontend dependencies: `npm install vue@3 axios @vitejs/plugin-vue`
-- [ ] T005 Install backend dependencies: `composer require laravel/sanctum` (for future auth)
-- [ ] T006 Configure Laravel Pint for PSR-12 in `pint.json`
-- [ ] T007 Create Git branch `001-todo-system-vn`
+- [X] T001 Verify Laravel 11 installation và PHP 8.3+ environment
+- [X] T002 Configure PostgreSQL database connection in `.env`
+- [X] T003 Set up Vite + Vue 3 + Tailwind CSS in `vite.config.js` và `tailwind.config.js`
+- [X] T004 Install frontend dependencies: `npm install vue@3 axios @vitejs/plugin-vue`
+- [X] T005 Install backend dependencies: `composer require laravel/sanctum` (for future auth)
+- [X] T006 Configure Laravel Pint for PSR-12 in `pint.json`
+- [X] T007 Create Git branch `001-todo-system-vn`
 
 **Completion Criteria**: ✅ All dependencies installed, database connected, environment configured
 
@@ -45,13 +45,13 @@
 
 **Tasks**:
 
-- [ ] T008 Create migration `database/migrations/2026_02_10_create_todos_table.php` (id, title, completed, timestamps)
-- [ ] T009 Run migration: `php artisan migrate`
-- [ ] T010 [P] Create Todo model in `app/Models/Todo.php` (strict_types, fillable, casts, toggleCompletion method)
-- [ ] T011 [P] Create TodoFactory in `database/factories/TodoFactory.php` for test data
-- [ ] T012 [P] Create base Vue app structure in `resources/js/app.js` with Vue 3 imports
-- [ ] T013 [P] Create base Blade template in `resources/views/app.blade.php` for SPA container
-- [ ] T014 Verify foundational setup: Run `php artisan tinker` and create a test Todo
+- [X] T008 Create migration `database/migrations/2026_02_10_create_todos_table.php` (id, title, completed, timestamps)
+- [X] T009 Run migration: `php artisan migrate`
+- [X] T010 [P] Create Todo model in `app/Models/Todo.php` (strict_types, fillable, casts, toggleCompletion method)
+- [X] T011 [P] Create TodoFactory in `database/factories/TodoFactory.php` for test data
+- [X] T012 [P] Create base Vue app structure in `resources/js/app.js` with Vue 3 imports
+- [X] T013 [P] Create base Blade template in `resources/views/app.blade.php` for SPA container
+- [X] T014 Verify foundational setup: Run `php artisan tinker` and create a test Todo
 
 **Completion Criteria**: ✅ Database schema exists, Todo model works, Vue app bootstrapped
 
