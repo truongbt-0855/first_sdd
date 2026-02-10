@@ -1,0 +1,420 @@
+openapi: 3.0.3
+info:
+  title: Todo List API
+  description: RESTful API cho hệ thống quản lý todo list cơ bản
+  version: 1.0.0
+  contact:
+    name: Todo System Team
+
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Local development server
+  - url: https://api.example.com/api/v1
+    description: Production server
+
+tags:
+  - name: Todos
+    description: Todo CRUD operations
+
+paths:
+  /todos:
+    get:
+      summary: Lấy danh sách tất cả todos
+      description: Trả về danh sách tất cả todo items của người dùng
+      operationId: listTodos
+      tags:
+        - Todos
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoListResponse'
+              examples:
+                withTodos:
+                  summary: Có todos
+                  value:
+                    success: true
+                    data:
+                      - id: 1
+                        title: "Mua sữa"
+                        completed: false
+                        created_at: "2026-02-10T10:00:00Z"
+                        updated_at: "2026-02-10T10:00:00Z"
+                      - id: 2
+                        title: "Học Laravel"
+                        completed: true
+                        created_at: "2026-02-10T09:00:00Z"
+                        updated_at: "2026-02-10T11:30:00Z"
+                    message: "Todos retrieved successfully"
+                emptyList:
+                  summary: Danh sách trống
+                  value:
+                    success: true
+                    data: []
+                    message: "No todos found"
+
+    post:
+      summary: Tạo todo mới
+      description: Tạo một todo item mới với tiêu đề được cung cấp
+      operationId: createTodo
+      tags:
+        - Todos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTodoRequest'
+            examples:
+              validTodo:
+                summary: Todo hợp lệ
+                value:
+                  title: "Hoàn thành project"
+              withEmoji:
+                summary: Todo với emoji
+                value:
+                  title: "Đọc sách 📚"
+      responses:
+        '201':
+          description: Todo created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+              example:
+                success: true
+                data:
+                  id: 3
+                  title: "Hoàn thành project"
+                  completed: false
+                  created_at: "2026-02-10T12:00:00Z"
+                  updated_at: "2026-02-10T12:00:00Z"
+                message: "Todo created successfully"
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+              examples:
+                emptyTitle:
+                  summary: Tiêu đề trống
+                  value:
+                    success: false
+                    message: "Validation failed"
+                    errors:
+                      title:
+                        - "Tiêu đề là bắt buộc"
+                titleTooLong:
+                  summary: Tiêu đề quá dài
+                  value:
+                    success: false
+                    message: "Validation failed"
+                    errors:
+                      title:
+                        - "Tiêu đề phải có tối đa 255 ký tự"
+
+  /todos/{id}:
+    parameters:
+      - $ref: '#/components/parameters/TodoId'
+
+    get:
+      summary: Lấy thông tin một todo
+      description: Trả về thông tin chi tiết của một todo cụ thể
+      operationId: getTodo
+      tags:
+        - Todos
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+              example:
+                success: true
+                data:
+                  id: 1
+                  title: "Mua sữa"
+                  completed: false
+                  created_at: "2026-02-10T10:00:00Z"
+                  updated_at: "2026-02-10T10:00:00Z"
+                message: "Todo retrieved successfully"
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+    put:
+      summary: Cập nhật tiêu đề todo
+      description: Cập nhật tiêu đề của todo hiện có
+      operationId: updateTodo
+      tags:
+        - Todos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTodoRequest'
+            example:
+              title: "Mua sữa tươi organic"
+      responses:
+        '200':
+          description: Todo updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+              example:
+                success: true
+                data:
+                  id: 1
+                  title: "Mua sữa tươi organic"
+                  completed: false
+                  created_at: "2026-02-10T10:00:00Z"
+                  updated_at: "2026-02-10T13:00:00Z"
+                message: "Todo updated successfully"
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+              example:
+                success: false
+                message: "Validation failed"
+                errors:
+                  title:
+                    - "Tiêu đề là bắt buộc"
+
+    delete:
+      summary: Xóa todo
+      description: Xóa vĩnh viễn một todo khỏi database
+      operationId: deleteTodo
+      tags:
+        - Todos
+      responses:
+        '200':
+          description: Todo deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                success: true
+                message: "Todo deleted successfully"
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /todos/{id}/toggle:
+    parameters:
+      - $ref: '#/components/parameters/TodoId'
+
+    patch:
+      summary: Chuyển đổi trạng thái hoàn thành
+      description: Đảo ngược trạng thái completed của todo (true ↔ false)
+      operationId: toggleTodo
+      tags:
+        - Todos
+      responses:
+        '200':
+          description: Todo toggled successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+              examples:
+                completedToUncompleted:
+                  summary: Từ completed → uncompleted
+                  value:
+                    success: true
+                    data:
+                      id: 1
+                      title: "Mua sữa"
+                      completed: false
+                      created_at: "2026-02-10T10:00:00Z"
+                      updated_at: "2026-02-10T14:00:00Z"
+                    message: "Todo completion toggled successfully"
+                uncompletedToCompleted:
+                  summary: Từ uncompleted → completed
+                  value:
+                    success: true
+                    data:
+                      id: 1
+                      title: "Mua sữa"
+                      completed: true
+                      created_at: "2026-02-10T10:00:00Z"
+                      updated_at: "2026-02-10T14:00:00Z"
+                    message: "Todo completion toggled successfully"
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+components:
+  parameters:
+    TodoId:
+      name: id
+      in: path
+      required: true
+      description: Todo ID (unique identifier)
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+      example: 1
+
+  schemas:
+    Todo:
+      type: object
+      required:
+        - id
+        - title
+        - completed
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier
+          example: 1
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Tiêu đề todo
+          example: "Mua sữa"
+        completed:
+          type: boolean
+          description: Trạng thái hoàn thành
+          example: false
+        created_at:
+          type: string
+          format: date-time
+          description: Thời điểm tạo (ISO 8601)
+          example: "2026-02-10T10:00:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          description: Thời điểm cập nhật cuối (ISO 8601)
+          example: "2026-02-10T10:00:00Z"
+
+    CreateTodoRequest:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Tiêu đề todo
+          example: "Học Vue 3"
+
+    UpdateTodoRequest:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Tiêu đề mới cho todo
+          example: "Học Vue 3 Composition API"
+
+    TodoResponse:
+      type: object
+      required:
+        - success
+        - data
+        - message
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/Todo'
+        message:
+          type: string
+          example: "Todo created successfully"
+
+    TodoListResponse:
+      type: object
+      required:
+        - success
+        - data
+        - message
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Todo'
+        message:
+          type: string
+          example: "Todos retrieved successfully"
+
+    SuccessResponse:
+      type: object
+      required:
+        - success
+        - message
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Operation completed successfully"
+
+    ValidationErrorResponse:
+      type: object
+      required:
+        - success
+        - message
+        - errors
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "Validation failed"
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          example:
+            title:
+              - "Tiêu đề là bắt buộc"
+
+    NotFoundErrorResponse:
+      type: object
+      required:
+        - success
+        - message
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "Todo not found"
+
+  responses:
+    NotFoundError:
+      description: Todo not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFoundErrorResponse'
+          example:
+            success: false
+            message: "Todo not found"
