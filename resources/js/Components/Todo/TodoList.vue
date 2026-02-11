@@ -19,6 +19,7 @@
                     :key="todo.id"
                     :todo="todo"
                     @toggle="handleToggle"
+                    @update="handleUpdate"
                 />
             </ul>
         </div>
@@ -72,6 +73,21 @@ const handleToggle = async (id) => {
     } catch (err) {
         error.value = 'Không thể cập nhật todo. Vui lòng thử lại.';
         console.error('Failed to toggle todo:', err);
+    }
+};
+
+const handleUpdate = async (id, title) => {
+    try {
+        const updatedTodo = await todoApi.update(id, title);
+        
+        // Update todo in list
+        const index = todos.value.findIndex(t => t.id === id);
+        if (index !== -1) {
+            todos.value[index] = updatedTodo;
+        }
+    } catch (err) {
+        error.value = 'Không thể cập nhật todo. Vui lòng thử lại.';
+        console.error('Failed to update todo:', err);
     }
 };
 

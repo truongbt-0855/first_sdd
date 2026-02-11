@@ -148,23 +148,23 @@
 
 ### Backend Implementation
 
-- [ ] T039 [P] [US3] Create UpdateTodoRequest in `app/Http/Requests/UpdateTodoRequest.php` (same validation as create)
-- [ ] T040 [US3] Add update method to TodoService in `app/Services/TodoService.php`
-- [ ] T041 [US3] Add update endpoint to TodoController in `app/Http/Controllers/Api/V1/TodoController.php`
-- [ ] T042 [US3] Register update route in `routes/api.php` (PUT /api/v1/todos/{id})
+- [X] T039 [P] [US3] Create UpdateTodoRequest in `app/Http/Requests/UpdateTodoRequest.php` (same validation as create)
+- [X] T040 [US3] Add update method to TodoService in `app/Services/TodoService.php`
+- [X] T041 [US3] Add update endpoint to TodoController in `app/Http/Controllers/Api/V1/TodoController.php`
+- [X] T042 [US3] Register update route in `routes/api.php` (PUT /api/v1/todos/{id})
 
 ### Frontend Implementation
 
-- [ ] T043 [P] [US3] Add update method to todoApi service in `resources/js/services/todoApi.js`
-- [ ] T044 [US3] Add edit mode to TodoItem component in `resources/js/Components/Todo/TodoItem.vue` (isEditing state, input field, save/cancel buttons)
-- [ ] T045 [US3] Update TodoList component to handle update event in `resources/js/Components/Todo/TodoList.vue`
-- [ ] T046 [US3] Add Tailwind styling for edit mode (border, focus states, button colors)
+- [X] T043 [P] [US3] Add update method to todoApi service in `resources/js/services/todoApi.js`
+- [X] T044 [US3] Add edit mode to TodoItem component in `resources/js/Components/Todo/TodoItem.vue` (isEditing state, input field, save/cancel buttons)
+- [X] T045 [US3] Update TodoList component to handle update event in `resources/js/Components/Todo/TodoList.vue`
+- [X] T046 [US3] Add Tailwind styling for edit mode (border, focus states, button colors)
 
 ### Testing
 
-- [ ] T047 [US3] Write update tests in `tests/Feature/Api/V1/TodoTest.php` (test_can_update_todo_title, test_cannot_update_with_empty_title)
-- [ ] T048 [US3] Test cancel edit restores original title
-- [ ] T049 [US3] Run tests: `php artisan test --filter TodoTest`
+- [X] T047 [US3] Write update tests in `tests/Feature/Api/V1/TodoTest.php` (test_can_update_todo_title, test_cannot_update_with_empty_title)
+- [X] T048 [US3] Test cancel edit restores original title
+- [X] T049 [US3] Run tests: `php artisan test --filter TodoTest`
 
 **Completion Criteria**:
 ✅ User can enter edit mode  

@@ -38,4 +38,15 @@ class TodoService
 
         return $todo;
     }
+
+    /**
+     * Update todo title.
+     */
+    public function update(int $id, string $title): Todo
+    {
+        $todo = Todo::findOrFail($id);
+        $todo->update(['title' => $title]);
+
+        return $todo;
+    }
 }

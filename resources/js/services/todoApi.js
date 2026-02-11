@@ -34,4 +34,15 @@ export const todoApi = {
         const response = await axios.patch(`${API_BASE}/todos/${id}/toggle`);
         return response.data.data;
     },
+
+    /**
+     * Update a todo's title
+     * @param {number} id - Todo ID
+     * @param {string} title - New title
+     * @returns {Promise<Object>} Updated todo
+     */
+    async update(id, title) {
+        const response = await axios.put(`${API_BASE}/todos/${id}`, { title });
+        return response.data.data;
+    },
 };

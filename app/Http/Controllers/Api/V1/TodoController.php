@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTodoRequest;
+use App\Http\Requests\UpdateTodoRequest;
 use App\Services\TodoService;
 use Illuminate\Http\JsonResponse;
 
@@ -52,4 +53,14 @@ class TodoController extends Controller
             'data' => $todo,
         ]);
     }
-}
+    /**
+     * Update a todo's title.
+     */
+    public function update(int $id, UpdateTodoRequest $request): JsonResponse
+    {
+        $todo = $this->todoService->update($id, $request->input('title'));
+
+        return response()->json([
+            'data' => $todo,
+        ]);
+    }}

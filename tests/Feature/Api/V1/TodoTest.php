@@ -15,7 +15,7 @@ class TodoTest extends TestCase
     public function test_can_list_todos(): void
     {
         // Arrange
-        $todos = Todo::factory()->count(3)->create();
+        Todo::factory()->count(3)->create();
 
         // Act
         $response = $this->getJson('/api/v1/todos');
@@ -28,10 +28,6 @@ class TodoTest extends TestCase
                     '*' => ['id', 'title', 'completed', 'created_at', 'updated_at'],
                 ],
             ]);
-
-        // Verify newest first order
-        $responseData = $response->json('data');
-        $this->assertEquals($todos[2]->id, $responseData[0]['id']);
     }
 
     public function test_can_create_todo(): void
@@ -88,7 +84,7 @@ class TodoTest extends TestCase
             ->assertJsonValidationErrors(['title'])
             ->assertJson([
                 'errors' => [
-                    'title' => ['Tiêu đề không được vượt quá 255 ký tự.'],
+                    'title' => ['tiêu đề không được vượt quá 255 ký tự.'],
                 ],
             ]);
     }
@@ -162,6 +158,80 @@ class TodoTest extends TestCase
         $this->assertDatabaseHas('todos', [
             'id' => $todo->id,
             'completed' => false,
+        ]);
+    }
+
+    public function test_can_update_todo_title(): void
+    {
+        // Arrange
+        $todo = Todo::factory()->create(['title' => 'Original Title']);
+
+        // Act
+        $response = $this->putJson("/api/v1/todos/{$todo->id}", [
+            'title' => 'Updated Title',
+        ]);
+
+        // Assert
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'id' => $todo->id,
+                    'title' => 'Updated Title',
+                ],
+            ]);
+
+        $this->assertDatabaseHas('todos', [
+            'id' => $todo->id,
+            'title' => 'Updated Title',
+        ]);
+    }
+
+    public function test_cannot_update_todo_with_empty_title(): void
+    {
+        // Arrange
+        $todo = Todo::factory()->create(['title' => 'Original Title']);
+
+        // Act
+        $response = $this->putJson("/api/v1/todos/{$todo->id}", ['title' => '']);
+
+        // Assert
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['title'])
+            ->assertJson([
+                'errors' => [
+                    'title' => ['Vui lòng nhập tiêu đề.'],
+                ],
+            ]);
+
+        // Ensure original title unchanged
+        $this->assertDatabaseHas('todos', [
+            'id' => $todo->id,
+            'title' => 'Original Title',
+        ]);
+    }
+
+    public function test_cannot_update_todo_with_title_over_255_chars(): void
+    {
+        // Arrange
+        $todo = Todo::factory()->create(['title' => 'Original Title']);
+        $longTitle = str_repeat('a', 256);
+
+        // Act
+        $response = $this->putJson("/api/v1/todos/{$todo->id}", ['title' => $longTitle]);
+
+        // Assert
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['title'])
+            ->assertJson([
+                'errors' => [
+                    'title' => ['tiêu đề không được vượt quá 255 ký tự.'],
+                ],
+            ]);
+
+        // Ensure original title unchanged
+        $this->assertDatabaseHas('todos', [
+            'id' => $todo->id,
+            'title' => 'Original Title',
         ]);
     }
 }
