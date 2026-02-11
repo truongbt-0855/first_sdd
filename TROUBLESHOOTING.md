@@ -135,26 +135,79 @@ docker-compose restart node
 
 ---
 
-## 5. Vite HMR Not Working
+## 5. Vite HMR Not Working / Vue Components Not Updating
 
 ### Hiện tượng
-Code thay đổi nhưng browser không tự động update
+- Thay đổi Vue components (.vue files) nhưng browser không tự động update
+- UI vẫn hiển thị code cũ dù đã save file
+- Phải restart node container và hard refresh browser mới thấy thay đổi
 
 ### Nguyên nhân
-HMR host configuration không đúng trong Docker environment
+**Docker volume mounting trên Windows có delay trong file change detection:**
+- Vite HMR dựa vào file system watchers (fs.watch, chokidar)
+- Docker Desktop trên Windows mount volumes qua WSL2
+- File changes từ Windows → WSL2 có latency cao (100-500ms)
+- Vite có thể miss file change events hoặc nhận quá chậm
+- **KHÔNG phải lỗi config** - đây là Docker on Windows limitation
 
 ### Cách fix
+
+**Fix 1: Manual Restart (Recommended cho stability)**
+```bash
+# Sau khi edit Vue files, restart node container
+docker-compose restart node
+
+# Đợi 8-10s cho Vite compile
+# Sau đó hard refresh browser: Ctrl + Shift + R
+```
+
+**Fix 2: Enable Polling Mode (Tự động nhưng tốn CPU)**
 ```javascript
 // vite.config.js
 export default defineConfig({
     server: {
-        host: '0.0.0.0',  // Listen all interfaces
+        host: '0.0.0.0',
         hmr: {
-            host: 'localhost',  // Browser kết nối qua localhost
+            host: 'localhost',
+        },
+        watch: {
+            usePolling: true,           // Enable polling
+            interval: 1000,             // Check every 1 second
+            ignored: ['**/storage/framework/views/**'],
         },
     },
 });
 ```
+
+⚠️ **Trade-offs của Polling:**
+- ✅ Auto-reload hoạt động (không cần restart)
+- ❌ Tốn CPU (~5-10% liên tục)
+- ❌ Phản hồi chậm hơn (~1-2s delay)
+- ❌ Pin laptop tụt nhanh hơn
+
+**Fix 3: Native Development (Fastest, no Docker)**
+```bash
+# Cài PHP, Node, PostgreSQL trực tiếp trên Windows
+# Không dùng Docker cho development
+# HMR hoạt động hoàn hảo, <100ms response
+```
+
+### Best Practice
+
+**Development workflow:**
+1. Edit Vue components
+2. Save files (Ctrl+S)
+3. Chạy: `docker-compose restart node`
+4. Đợi ~8s
+5. Hard refresh browser: `Ctrl + Shift + R`
+
+**Lưu ý:**
+- `.js`, `.css` files thường HMR OK
+- `.vue` files (SFC) thường cần restart
+- Backend PHP không cần restart (OPcache tự reload)
+
+### Production Note
+**Không ảnh hưởng production!** Vite dev server chỉ dùng development. Production build (`npm run build`) tạo static assets, không có HMR.
 
 ---
 

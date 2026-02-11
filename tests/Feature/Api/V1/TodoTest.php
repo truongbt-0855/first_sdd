@@ -117,4 +117,51 @@ class TodoTest extends TestCase
         $response->assertStatus(200)
             ->assertJson(['data' => []]);
     }
+
+    public function test_can_toggle_todo_completion(): void
+    {
+        // Arrange
+        $todo = Todo::factory()->create(['completed' => false]);
+
+        // Act - Toggle to completed
+        $response = $this->patchJson("/api/v1/todos/{$todo->id}/toggle");
+
+        // Assert
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'id' => $todo->id,
+                    'completed' => true,
+                ],
+            ]);
+
+        $this->assertDatabaseHas('todos', [
+            'id' => $todo->id,
+            'completed' => true,
+        ]);
+    }
+
+    public function test_toggle_is_idempotent(): void
+    {
+        // Arrange
+        $todo = Todo::factory()->create(['completed' => false]);
+
+        // Act - Toggle twice
+        $this->patchJson("/api/v1/todos/{$todo->id}/toggle");
+        $response = $this->patchJson("/api/v1/todos/{$todo->id}/toggle");
+
+        // Assert - Should be back to uncompleted
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'id' => $todo->id,
+                    'completed' => false,
+                ],
+            ]);
+
+        $this->assertDatabaseHas('todos', [
+            'id' => $todo->id,
+            'completed' => false,
+        ]);
+    }
 }

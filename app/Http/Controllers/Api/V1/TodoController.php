@@ -40,4 +40,16 @@ class TodoController extends Controller
             'data' => $todo,
         ], 201);
     }
+
+    /**
+     * Toggle todo completion status.
+     */
+    public function toggle(int $id): JsonResponse
+    {
+        $todo = $this->todoService->toggle($id);
+
+        return response()->json([
+            'data' => $todo,
+        ]);
+    }
 }

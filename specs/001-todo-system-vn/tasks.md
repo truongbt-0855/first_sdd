@@ -111,22 +111,22 @@
 
 ### Backend Implementation
 
-- [ ] T029 [US2] Add toggle method to TodoService in `app/Services/TodoService.php` (call toggleCompletion on model)
-- [ ] T030 [US2] Add toggle endpoint to TodoController in `app/Http/Controllers/Api/V1/TodoController.php`
-- [ ] T031 [US2] Register toggle route in `routes/api.php` (PATCH /api/v1/todos/{id}/toggle)
+- [X] T029 [US2] Add toggle method to TodoService in `app/Services/TodoService.php` (call toggleCompletion on model)
+- [X] T030 [US2] Add toggle endpoint to TodoController in `app/Http/Controllers/Api/V1/TodoController.php`
+- [X] T031 [US2] Register toggle route in `routes/api.php` (PATCH /api/v1/todos/{id}/toggle)
 
 ### Frontend Implementation
 
-- [ ] T032 [P] [US2] Add toggle method to todoApi service in `resources/js/services/todoApi.js`
-- [ ] T033 [US2] Update TodoItem component in `resources/js/Components/Todo/TodoItem.vue` (add checkbox, emit toggle event, line-through styling)
-- [ ] T034 [US2] Update TodoList component to handle toggle event in `resources/js/Components/Todo/TodoList.vue`
-- [ ] T035 [US2] Add Tailwind conditional styling (line-through text-gray-400 for completed)
+- [X] T032 [P] [US2] Add toggle method to todoApi service in `resources/js/services/todoApi.js`
+- [X] T033 [US2] Update TodoItem component in `resources/js/Components/Todo/TodoItem.vue` (add checkbox, emit toggle event, line-through styling)
+- [X] T034 [US2] Update TodoList component to handle toggle event in `resources/js/Components/Todo/TodoList.vue`
+- [X] T035 [US2] Add Tailwind conditional styling (line-through text-gray-400 for completed)
 
 ### Testing
 
-- [ ] T036 [US2] Write toggle tests in `tests/Feature/Api/V1/TodoTest.php` (test_can_toggle_todo_completion, test_toggle_is_idempotent)
-- [ ] T037 [US2] Test completion state persistence after page refresh
-- [ ] T038 [US2] Run tests: `php artisan test --filter TodoTest`
+- [X] T036 [US2] Write toggle tests in `tests/Feature/Api/V1/TodoTest.php` (test_can_toggle_todo_completion, test_toggle_is_idempotent)
+- [X] T037 [US2] Test completion state persistence after page refresh
+- [X] T038 [US2] Run tests: `php artisan test --filter TodoTest`
 
 **Completion Criteria**:
 ✅ Uncompleted todo → Toggle → Shows completed (visual indicator)  

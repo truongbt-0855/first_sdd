@@ -27,4 +27,15 @@ class TodoService
             'completed' => false,
         ]);
     }
+
+    /**
+     * Toggle todo completion status.
+     */
+    public function toggle(int $id): Todo
+    {
+        $todo = Todo::findOrFail($id);
+        $todo->toggleCompletion();
+
+        return $todo;
+    }
 }

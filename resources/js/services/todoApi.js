@@ -24,4 +24,14 @@ export const todoApi = {
         const response = await axios.post(`${API_BASE}/todos`, { title });
         return response.data.data;
     },
+
+    /**
+     * Toggle todo completion status
+     * @param {number} id - Todo ID
+     * @returns {Promise<Object>}
+     */
+    async toggle(id) {
+        const response = await axios.patch(`${API_BASE}/todos/${id}/toggle`);
+        return response.data.data;
+    },
 };
