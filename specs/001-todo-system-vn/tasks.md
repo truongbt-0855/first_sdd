@@ -69,26 +69,26 @@
 
 ### Backend Implementation
 
-- [ ] T015 [P] [US1] Create StoreTodoRequest in `app/Http/Requests/StoreTodoRequest.php` (validate title: required, string, max:255, Vietnamese messages)
-- [ ] T016 [US1] Create TodoService in `app/Services/TodoService.php` (getAll, create methods with strict types)
-- [ ] T017 [US1] Create TodoController in `app/Http/Controllers/Api/V1/TodoController.php` (index, store methods)
-- [ ] T018 [US1] Register API routes in `routes/api.php` (GET /api/v1/todos, POST /api/v1/todos)
+- [X] T015 [P] [US1] Create StoreTodoRequest in `app/Http/Requests/StoreTodoRequest.php` (validate title: required, string, max:255, Vietnamese messages)
+- [X] T016 [US1] Create TodoService in `app/Services/TodoService.php` (getAll, create methods with strict types)
+- [X] T017 [US1] Create TodoController in `app/Http/Controllers/Api/V1/TodoController.php` (index, store methods)
+- [X] T018 [US1] Register API routes in `routes/api.php` (GET /api/v1/todos, POST /api/v1/todos)
 
 ### Frontend Implementation
 
-- [ ] T019 [P] [US1] Create todoApi service in `resources/js/services/todoApi.js` (getAll, create methods with Axios)
-- [ ] T020 [P] [US1] Create TodoForm component in `resources/js/Components/Todo/TodoForm.vue` (input, validation, emit create event)
-- [ ] T021 [P] [US1] Create TodoEmptyState component in `resources/js/Components/Todo/TodoEmptyState.vue` (Tailwind styling)
-- [ ] T022 [P] [US1] Create TodoItem component in `resources/js/Components/Todo/TodoItem.vue` (display title only, no edit/delete yet)
-- [ ] T023 [US1] Create TodoList component in `resources/js/Components/Todo/TodoList.vue` (fetch on mount, render items, handle create)
-- [ ] T024 [US1] Create TodosPage in `resources/js/Pages/TodosPage.vue` (main page container with Tailwind layout)
-- [ ] T025 [US1] Add Tailwind utilities for form styling (mobile-first: p-4 sm:p-6, text-sm md:text-base)
+- [X] T019 [P] [US1] Create todoApi service in `resources/js/services/todoApi.js` (getAll, create methods with Axios)
+- [X] T020 [P] [US1] Create TodoForm component in `resources/js/Components/Todo/TodoForm.vue` (input, validation, emit create event)
+- [X] T021 [P] [US1] Create TodoEmptyState component in `resources/js/Components/Todo/TodoEmptyState.vue` (Tailwind styling)
+- [X] T022 [P] [US1] Create TodoItem component in `resources/js/Components/Todo/TodoItem.vue` (display title only, no edit/delete yet)
+- [X] T023 [US1] Create TodoList component in `resources/js/Components/Todo/TodoList.vue` (fetch on mount, render items, handle create)
+- [X] T024 [US1] Create TodosPage in `resources/js/Pages/TodosPage.vue` (main page container with Tailwind layout)
+- [X] T025 [US1] Add Tailwind utilities for form styling (mobile-first: p-4 sm:p-6, text-sm md:text-base)
 
 ### Testing
 
-- [ ] T026 [US1] Write feature test in `tests/Feature/Api/V1/TodoTest.php` (test_can_list_todos, test_can_create_todo)
-- [ ] T027 [US1] Write validation tests (test_cannot_create_todo_with_empty_title, test_cannot_create_todo_with_title_over_255_chars)
-- [ ] T028 [US1] Run tests: `php artisan test --filter TodoTest`
+- [X] T026 [US1] Write feature test in `tests/Feature/Api/V1/TodoTest.php` (test_can_list_todos, test_can_create_todo)
+- [X] T027 [US1] Write validation tests (test_cannot_create_todo_with_empty_title, test_cannot_create_todo_with_title_over_255_chars)
+- [X] T028 [US1] Run tests: `php artisan test --filter TodoTest`
 
 **Completion Criteria**: 
 ✅ User can view empty list  

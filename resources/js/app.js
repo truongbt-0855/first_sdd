@@ -1,8 +1,8 @@
 import './bootstrap';
 import { createApp } from 'vue';
-import App from './App.vue';
+import TodosPage from './Pages/TodosPage.vue';
 
-const app = createApp(App);
+const app = createApp(TodosPage);
 
 app.mount('#app');
 
